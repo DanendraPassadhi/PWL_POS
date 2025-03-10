@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,5 @@ Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
 Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
 
 Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
+
+Route::get('/', [WelcomeController::class, 'index']);
