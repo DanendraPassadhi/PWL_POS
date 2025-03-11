@@ -31,3 +31,14 @@ Route::group(['prefix' => 'user'], function () {
     Route::put('/{id}', [UserController::class, 'update']);         // Menyimpan perubahan data user
     Route::delete('/{id}', [UserController::class, 'destroy']);     // Menghapus data user
 });
+
+Route::group(['prefix' => 'level'], function () {
+    Route::get('/', [LevelController::class, 'index']);              // Menampilkan halaman awal level
+    Route::post('/list', [LevelController::class, 'list']);          // Menampilkan data level dalam bentuk json untuk datatables
+    Route::get('/create', [LevelController::class, 'create']);       // Menampilkan halaman form tambah level
+    Route::post('/', [LevelController::class, 'store']);             // Menyimpan data level baru
+    Route::get('/{id}', [LevelController::class, 'show']);           // Menampilkan detail level
+    Route::get('/{id}/edit', [LevelController::class, 'edit']);      // Menampilkan halaman form edit level
+    Route::put('/{id}', [LevelController::class, 'update']);         // Menyimpan perubahan data level
+    Route::delete('/{id}', [LevelController::class, 'destroy']);     // Menghapus data level
+});
