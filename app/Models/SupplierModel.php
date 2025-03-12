@@ -12,4 +12,9 @@ class SupplierModel extends Model
     protected $table = 'm_supplier';
     protected $primaryKey = 'id';
     protected $fillable = ['supplier_nama', 'supplier_alamat', 'supplier_telp'];
+
+    public function barang()
+    {
+        return $this->hasMany(BarangModel::class, 'supplier_id', 'id');
+    }
 } 
