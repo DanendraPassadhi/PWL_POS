@@ -37,7 +37,7 @@ $(document).ready(function() {
                 minlength: 3,
                 maxlength: 10
             },
-            nama_level: {
+            level_nama: {
                 required: true,
                 minlength: 3,
                 maxlength: 100
