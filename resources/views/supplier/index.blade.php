@@ -46,7 +46,7 @@ backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></di
 
     var dataSupplier;
     $(document).ready(function() {
-        var dataSupplier = $('#table_supplier').DataTable({
+        dataSupplier = $('#table_supplier').DataTable({
             // serverSide: true, jika ingin menggunakan server side processing
             serverSide: true,
             ajax: {

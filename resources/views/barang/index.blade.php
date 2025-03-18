@@ -65,7 +65,7 @@ backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></di
 
     var dataBarang;
     $(document).ready(function() {
-        var dataBarang = $('#table_barang').DataTable({
+        dataBarang = $('#table_barang').DataTable({
             serverSide: true,
             ajax: {
                 "url": "{{ url('barang/list') }}",

@@ -45,7 +45,7 @@ backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></di
 
     var dataLevel;
     $(document).ready(function() {
-        var dataLevel = $('#table_level').DataTable({
+        dataLevel = $('#table_level').DataTable({
             // serverSide: true, jika ingin menggunakan server side processing
             serverSide: true,
             ajax: {

@@ -45,7 +45,7 @@ backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></di
 
     var dataKategori;
     $(document).ready(function() {
-        var dataKategori = $('#table_kategori').DataTable({
+        dataKategori = $('#table_kategori').DataTable({
             // serverSide: true, jika ingin menggunakan server side processing
             serverSide: true,
             ajax: {
