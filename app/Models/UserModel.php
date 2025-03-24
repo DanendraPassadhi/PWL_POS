@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\LevelModel;
+use Illuminate\Foundation\Auth\User as Authenticatable; // Implementasi class Authenticatable
 
-class UserModel extends Model
+class UserModel extends Authenticatable
 {
     use HasFactory;
 
@@ -18,7 +19,11 @@ class UserModel extends Model
      *
      * @var array
      */
-    protected $fillable = ['level_id', 'username', 'nama', 'password'];
+    protected $fillable = ['username', 'password', 'nama', 'level_id', 'created_at', 'updated_at'];
+
+    protected $hidden = ['password']; // Jangan tampilkan saat select
+    
+    protected $casts = ['password' => 'hashed']; // Casting password agar otomastis di hash
 
     public function level(): BelongsTo
     {
