@@ -106,21 +106,16 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
 
     Route::group(['prefix' => 'barang'], function () {
-        Route::get('/', [BarangController::class, 'index']);              // Menampilkan halaman awal barang
-        Route::post('/list', [BarangController::class, 'list']);          // Menampilkan data barang dalam bentuk json untuk datatables
-        Route::get('/create', [BarangController::class, 'create']);       // Menampilkan halaman form tambah barang
-        Route::post('/', [BarangController::class, 'store']);             // Menyimpan data barang baru
-        Route::get('/create_ajax', [BarangController::class, 'create_ajax']);    // Menampilkan halaman form tambah barang Ajax
-        Route::post('/ajax', [BarangController::class, 'store_ajax']);          // Menyimpan data barang baru Ajax
-        Route::get('/{id}', [BarangController::class, 'show']);           // Menampilkan detail barang
-        Route::get('/{id}/edit', [BarangController::class, 'edit']);      // Menampilkan halaman form edit barang
-        Route::put('/{id}', [BarangController::class, 'update']);         // Menyimpan perubahan data barang
-        Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax']);     // Menampilkan halaman form barang Ajax
-        Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax']);     // Menampilkan halaman form edit barang Ajax
-        Route::put('/{id}/update_ajax', [BarangController::class, 'update_ajax']);  // Menyimpan perubahan data barang Ajax
-        Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete barang Ajax
-        Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // Untuk hapus data barang Ajax
-        Route::delete('/{id}', [BarangController::class, 'destroy']);     // Menghapus data barang
+        Route::get('/', [BarangController::class, 'index']);
+        Route::post('/list', [BarangController::class, 'list']);
+        Route::get('/create_ajax', [BarangController::class, 'create_ajax']); // ajax form create
+        Route::post('/ajax', [BarangController::class, 'store_ajax']); // ajax store
+        Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax']); // ajax form edit
+        Route::put('/{id}/update_ajax', [BarangController::class, 'update_ajax']); // ajax update
+        Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // ajax form confirm
+        Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // ajax delete
+        Route::get('/import', [BarangController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
     });
 });
 
@@ -150,12 +145,13 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::get('/barang', [BarangController::class, 'index']);
         Route::post('/barang/list', [BarangController::class, 'list']);
         Route::get('/barang/create_ajax', [BarangController::class, 'create_ajax']); // ajax form create
-        Route::post('/barang_ajax', [BarangController::class, 'store_ajax']); // ajax store
-        Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax']); //ajax show
+        Route::post('/barang/ajax', [BarangController::class, 'store_ajax']); // ajax store
         Route::get('/barang/{id}/edit_ajax', [BarangController::class, 'edit_ajax']); // ajax form edit
         Route::put('/barang/{id}/update_ajax', [BarangController::class, 'update_ajax']); // ajax update
         Route::get('/barang/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // ajax form confirm
         Route::delete('/barang/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // ajax delete
+        Route::get('/barang/import', [BarangController::class, 'import']); // ajax form upload excel
+        Route::post('/barang/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
     });
 
     // route User
