@@ -158,6 +158,19 @@ class BarangController extends Controller
         return redirect('/');
     }
 
+    public function show_ajax(string $id)
+     {
+         $barang = barangModel::find($id);
+         $kategori = KategoriModel::all();
+         $supplier = SupplierModel::all();
+     
+         return view('barang.show_ajax', [
+             'barang' => $barang,
+             'kategori' => $kategori,
+             'supplier' => $supplier
+         ]);
+     }
+
     public function import()
     {
         return view('barang.import');

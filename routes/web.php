@@ -110,6 +110,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::post('/list', [BarangController::class, 'list']);
         Route::get('/create_ajax', [BarangController::class, 'create_ajax']); // ajax form create
         Route::post('/ajax', [BarangController::class, 'store_ajax']); // ajax store
+        Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax']); //ajax show
         Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax']); // ajax form edit
         Route::put('/{id}/update_ajax', [BarangController::class, 'update_ajax']); // ajax update
         Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // ajax form confirm
@@ -147,6 +148,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::post('/barang/list', [BarangController::class, 'list']);
         Route::get('/barang/create_ajax', [BarangController::class, 'create_ajax']); // ajax form create
         Route::post('/barang/ajax', [BarangController::class, 'store_ajax']); // ajax store
+        Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax']); //ajax show
         Route::get('/barang/{id}/edit_ajax', [BarangController::class, 'edit_ajax']); // ajax form edit
         Route::put('/barang/{id}/update_ajax', [BarangController::class, 'update_ajax']); // ajax update
         Route::get('/barang/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // ajax form confirm
