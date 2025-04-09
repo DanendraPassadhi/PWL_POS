@@ -39,9 +39,9 @@
                 $('#myModal').modal('show');
             });
         }
-        var tableKategori;
+        var dataKategori;
         $(document).ready(function() {
-            tableKategori = $('#table_kategori').DataTable({
+            dataKategori = $('#table_kategori').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {

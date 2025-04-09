@@ -39,9 +39,9 @@
                 $('#myModal').modal('show');
             });
         }
-        var tableLevel;
+        var dataLevel;
         $(document).ready(function() {
-            tableLevel = $('#table_level').DataTable({
+            dataLevel = $('#table_level').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
