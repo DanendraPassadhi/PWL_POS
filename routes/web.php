@@ -108,6 +108,8 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::get('/{id}/delete_ajax', [SupplierController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete supplier Ajax
         Route::delete('/{id}/delete_ajax', [SupplierController::class, 'delete_ajax']); // Untuk hapus data supplier Ajax
         Route::delete('/{id}', [SupplierController::class, 'destroy']);     // Menghapus data supplier
+        Route::get('/import', [SupplierController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [SupplierController::class, 'import_ajax']); // ajax import excel
     });
 
     Route::group(['prefix' => 'barang'], function () {
@@ -205,5 +207,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::put('/supplier/{id}/update_ajax', [SupplierController::class, 'update_ajax']); // ajax update
         Route::get('/supplier/{id}/delete_ajax', [SupplierController::class, 'confirm_ajax']); // ajax form confirm
         Route::delete('/supplier/{id}/delete_ajax', [SupplierController::class, 'delete_ajax']); // ajax delete
+        Route::get('/supplier/import', [SupplierController::class, 'import']); // ajax form upload excel
+        Route::post('/supplier/import_ajax', [SupplierController::class, 'import_ajax']); // ajax import excel
     });
 });
