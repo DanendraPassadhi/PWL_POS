@@ -71,7 +71,6 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::delete('/{id}', [LevelController::class, 'destroy']);     // Menghapus data level
         Route::get('/import', [LevelController::class, 'import']); // ajax form upload excel
         Route::post('/import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
-
     });
 
     Route::group(['prefix' => 'kategori'], function () {
@@ -151,6 +150,8 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::delete('/level/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // ajax delete
         Route::get('/level/import', [LevelController::class, 'import']); // ajax form upload excel
         Route::post('/level/import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
+        Route::get('/level/export_excel', [LevelController::class, 'export_excel']); // export excel
+        Route::get('/level/export_pdf', [LevelController::class, 'export_pdf']); // export pdf
     });
 
     // route Barang
@@ -196,8 +197,9 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::put('/kategori/{id}/update_ajax', [KategoriController::class, 'update_ajax']); // ajax update
         Route::get('/kategori/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']); // ajax form confirm
         Route::delete('/kategori/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']); // ajax delete
-        Route::get('/level/import', [KategoriController::class, 'import']); // ajax form upload excel
-        Route::post('/level/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
+        Route::get('/kategori/import', [KategoriController::class, 'import']); // ajax form upload excel
+        Route::post('/kategori/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
+        Route::get('/kategori/export_excel', [KategoriController::class, 'export_excel']); // export excel
     });
 
     // route Supplier

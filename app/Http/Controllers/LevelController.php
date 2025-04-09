@@ -45,9 +45,9 @@ class LevelController extends Controller
                 // $btn .= '<form class="d-inline-block" method="POST" action="'.url('/level/' . $level->level_id).'">'
                 //     . csrf_field() . method_field('DELETE') .
                 //     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
-                $btn = '<button onclick="modalAction(\''.url('/level/' . $level->level_id . '/show_ajax').'\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\''.url('/level/' . $level->level_id . '/edit_ajax').'\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\''.url('/level/' . $level->level_id . '/delete_ajax').'\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                $btn = '<button onclick="modalAction(\'' . url('/level/' . $level->level_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/level/' . $level->level_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/level/' . $level->level_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi'])
@@ -70,9 +70,9 @@ class LevelController extends Controller
         $activeMenu = 'level';       // set menu yang sedang aktif
 
         return view('level.create', [
-            'breadcrumb' => $breadcrumb, 
-            'page' => $page, 
-            'level' => $level, 
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'level' => $level,
             'activeMenu' => $activeMenu
         ]);
     }
@@ -112,9 +112,9 @@ class LevelController extends Controller
         $activeMenu = 'level'; // set menu yang sedang aktif
 
         return view('level.show', [
-            'breadcrumb' => $breadcrumb, 
-            'page' => $page, 
-            'level' => $level, 
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'level' => $level,
             'activeMenu' => $activeMenu
         ]);
     }
@@ -147,7 +147,7 @@ class LevelController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'level_kode' => 'required|string|max:10|unique:m_level,level_kode,'.$id.',level_id', // level_kode harus diisi, string, maksiumal 10 karakter, dan unik di tabel m_level kolom level_kode
+            'level_kode' => 'required|string|max:10|unique:m_level,level_kode,' . $id . ',level_id', // level_kode harus diisi, string, maksiumal 10 karakter, dan unik di tabel m_level kolom level_kode
             'level_nama' => 'required|string|max:100'  // nama harus diisi, berupa string, dan maksimal 100 karakter
         ]);
 
@@ -167,11 +167,11 @@ class LevelController extends Controller
             return redirect('/level')->with('error', 'Data level tidak ditemukan');
         }
 
-        try{
+        try {
             LevelModel::destroy($id);    // Hapus data level
 
             return redirect('/level')->with('success', 'Data level berhasil dihapus');
-        }catch (\Illuminate\Database\QueryException $e){
+        } catch (\Illuminate\Database\QueryException $e) {
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
             return redirect('/level')->with('error', 'Data level gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
@@ -182,9 +182,10 @@ class LevelController extends Controller
         return view('level.create_ajax');
     }
 
-    public function store_ajax(Request $request) {
+    public function store_ajax(Request $request)
+    {
         // cek apakah request berupa ajax
-        if($request->ajax() || $request->wantsJson()) {
+        if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'level_kode' => 'required|string|max:10|unique:m_level,level_kode',
                 'level_nama' => 'required|string|max:100'
@@ -193,7 +194,7 @@ class LevelController extends Controller
             // use Illuminate\Support\Facades\Validator;
             $validator = Validator::make($request->all(), $rules);
 
-            if($validator->fails()) {
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => false, // response status, false: error/gagal, true: berhasil
                     'message' => 'Validasi Gagal',
@@ -213,7 +214,7 @@ class LevelController extends Controller
     public function edit_ajax(string $id)
     {
         $level = LevelModel::find($id);
-        
+
         return view('level.edit_ajax', [
             'level' => $level
         ]);
@@ -224,7 +225,7 @@ class LevelController extends Controller
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'level_kode' => 'required|max:10|unique:m_level,level_kode,'.$id.',level_id',
+                'level_kode' => 'required|max:10|unique:m_level,level_kode,' . $id . ',level_id',
                 'level_nama' => 'required|max:100'
             ];
 
@@ -259,7 +260,8 @@ class LevelController extends Controller
         return redirect('/');
     }
 
-    public function confirm_ajax(string $id) {
+    public function confirm_ajax(string $id)
+    {
         $level = LevelModel::find($id);
         return view('level.confirm_ajax', ['level' => $level]);
     }
@@ -297,7 +299,7 @@ class LevelController extends Controller
     public function show_ajax(string $id)
     {
         $level = LevelModel::find($id);
-    
+
         return view('level.show_ajax', [
             'level' => $level
         ]);
@@ -355,4 +357,70 @@ class LevelController extends Controller
         }
         return redirect('/');
     }
+
+    public function export_excel()
+    {
+        // ambil data level yang akan di export
+        $level = LevelModel::select('level_kode', 'level_nama',)
+            ->get();
+
+        // load library excel
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet(); // ambil sheet yang aktif
+
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Kode Level');
+        $sheet->setCellValue('C1', 'Nama Level');
+
+
+        $sheet->getStyle('A1:C1')->getFont()->setBold(true); // bold header
+
+        $no = 1; // nomor data dimulai dari 1
+        $baris = 2; // baris data dimulai dari baris ke 2
+
+        foreach ($level as $key => $value) {
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $value->level_kode);
+            $sheet->setCellValue('C' . $baris, $value->level_nama);
+
+            $baris++;
+            $no++;
+        }
+
+        foreach (range('A', 'F') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true); // set auto size untuk kolom
+        }
+
+        $sheet->setTitle('Data Level'); // set title sheet
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $filename = 'Data Level ' . date('Y-m-d H:i:s') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
+
+        $writer->save('php://output');
+        exit;
+    } // end function export_excel
+
+    public function export_pdf()
+    {
+        $level = LevelModel::select('level_kode', 'level_nama')
+            ->get();
+
+        // use Barryvdh\DomPDF\Facade\Pdf;
+        $pdf = Pdf::loadView('level.export_pdf', ['level' => $level]);
+        $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
+        $pdf->setOption('isRemoteEnabled', true); // set true jika ada gambar dari url
+        $pdf->render();
+
+        return $pdf->stream('Data Level ' . date('Y-m-d H:i:s') . '.pdf');
+    }
+    
 }
