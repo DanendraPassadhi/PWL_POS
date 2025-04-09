@@ -6,10 +6,13 @@ use App\Models\KategoriModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KategoriController extends Controller
 {
-    //Menampilkan halaman awal level
+    //Menampilkan halaman awal Kategori
     public function index()
     {
         $breadcrumb = (object) [
@@ -201,7 +204,7 @@ class KategoriController extends Controller
             KategoriModel::create($request->all());
             return response()->json([
                 'status' => true,
-                'message' => 'Data level berhasil disimpan'
+                'message' => 'Data Kategori berhasil disimpan'
             ]);
         }
         redirect('/');
@@ -288,5 +291,58 @@ class KategoriController extends Controller
         return view('kategori.show_ajax', [
             'kategori' => $kategori,
         ]);
+    }
+
+    public function import()
+    {
+        return view('kategori.import');
+    }
+
+    public function import_ajax(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'file_kategori' => ['required', 'mimes:xlsx', 'max:1024']
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors()
+                ]);
+            }
+            $file = $request->file('file_kategori');
+            $reader = IOFactory::createReader('Xlsx');
+            $reader->setReadDataOnly(true);
+            $spreadsheet = $reader->load($file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $data = $sheet->toArray(null, false, true, true);
+            $insert = [];
+            if (count($data) > 1) {
+                foreach ($data as $baris => $value) {
+                    if ($baris > 1) {
+                        $insert[] = [
+                            'kategori_id' => $value['A'],
+                            'kategori_nama' => $value['B'],
+                            'created_at' => now(),
+                        ];
+                    }
+                }
+                if (count($insert) > 0) {
+                    KategoriModel::insertOrIgnore($insert);
+                }
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil diimport'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Tidak ada data yang diimport'
+                ]);
+            }
+        }
+        return redirect('/');
     }
 }

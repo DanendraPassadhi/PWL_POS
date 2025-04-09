@@ -88,6 +88,8 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::get('/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete kategori Ajax
         Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']); // Untuk hapus data kategori Ajax
         Route::delete('/{id}', [KategoriController::class, 'destroy']);     // Menghapus data kategori
+        Route::get('/import', [KategoriController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
     });
 
     Route::group(['prefix' => 'supplier'], function () {
@@ -188,6 +190,8 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::put('/kategori/{id}/update_ajax', [KategoriController::class, 'update_ajax']); // ajax update
         Route::get('/kategori/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']); // ajax form confirm
         Route::delete('/kategori/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']); // ajax delete
+        Route::get('/level/import', [KategoriController::class, 'import']); // ajax form upload excel
+        Route::post('/level/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
     });
 
     // route Supplier
