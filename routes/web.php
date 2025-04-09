@@ -217,5 +217,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::delete('/supplier/{id}/delete_ajax', [SupplierController::class, 'delete_ajax']); // ajax delete
         Route::get('/supplier/import', [SupplierController::class, 'import']); // ajax form upload excel
         Route::post('/supplier/import_ajax', [SupplierController::class, 'import_ajax']); // ajax import excel
+        Route::get('/supplier/export_excel', [SupplierController::class, 'export_excel']); // export excel
+        Route::get('/supplier/export_pdf', [SupplierController::class, 'export_pdf']); // export pdf
     });
 });
