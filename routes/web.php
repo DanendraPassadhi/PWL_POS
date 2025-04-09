@@ -67,6 +67,9 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::get('/{id}/delete_ajax', [LevelController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete level Ajax
         Route::delete('/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // Untuk hapus data level Ajax
         Route::delete('/{id}', [LevelController::class, 'destroy']);     // Menghapus data level
+        Route::get('/import', [LevelController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
+
     });
 
     Route::group(['prefix' => 'kategori'], function () {
@@ -140,6 +143,8 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::put('/level/{id}/update_ajax', [LevelController::class, 'update_ajax']); // ajax update
         Route::get('/level/{id}/delete_ajax', [LevelController::class, 'confirm_ajax']); // ajax form confirm
         Route::delete('/level/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // ajax delete
+        Route::get('/level/import', [LevelController::class, 'import']); // ajax form upload excel
+        Route::post('/level/import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
     });
 
     // route Barang
