@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete user Ajax
         Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // Untuk hapus data user Ajax
         Route::delete('/{id}', [UserController::class, 'destroy']);     // Menghapus data user
+        Route::get('/import', [UserController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [UserController::class, 'import_ajax']); // ajax import excel
     });
 
     Route::group(['prefix' => 'level'], function () {
@@ -179,6 +181,8 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
         Route::put('/user/{id}/update_ajax', [UserController::class, 'update_ajax']); // ajax update
         Route::get('/user/{id}/delete_ajax', [UserController::class, 'confirm_ajax']); // ajax form confirm
         Route::delete('/user/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // ajax delete
+        Route::get('/user/import', [UserController::class, 'import']); // ajax form upload excel
+        Route::post('/user/import_ajax', [UserController::class, 'import_ajax']); // ajax import excel
     });
 
     // route Kategori
