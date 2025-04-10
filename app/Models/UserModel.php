@@ -19,7 +19,7 @@ class UserModel extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['username', 'password', 'nama', 'level_id', 'created_at', 'updated_at'];
+    protected $fillable = ['username', 'password', 'nama', 'level_id', 'created_at', 'updated_at', 'profile_picture'];
 
     protected $hidden = ['password']; // Jangan tampilkan saat select
 
