@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\UserModel;
 use App\Models\LevelModel;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -132,10 +133,14 @@ class AuthController extends Controller
         }
 
         if ($request->hasFile('profile_picture')) {
+            if ($user->profile_picture && Storage::disk('public')->exists('profile/' . $user->profile_picture)) {
+                Storage::disk('public')->delete('profile/' . $user->profile_picture);
+            }
+            
             $file = $request->file('profile_picture');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/profile'), $filename);
-            $user->profile_picture = $filename;
+            $path = $file->storeAs('public/profile', $filename);
+            $user->profile_picture = basename($path);
         }
 
         /** @var \App\Models\User $user **/
