@@ -8,7 +8,7 @@
   */
 
 $bootstrap-switch-border-radius: $btn-border-radius;
-$bootstrap-switch-handle-border-radius: .1rem;
+$bootstrap-switch-handle-border-radius: 0.1rem;
 
 .bootstrap-switch {
   border: $input-border-width solid $input-border-color;
@@ -16,12 +16,12 @@ $bootstrap-switch-handle-border-radius: .1rem;
   cursor: pointer;
   direction: ltr;
   display: inline-block;
-  line-height: .5rem;
+  line-height: 0.5rem;
   overflow: hidden;
   position: relative;
   text-align: left;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  user-select: none;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  stok-select: none;
   vertical-align: middle;
   z-index: 0;
 
@@ -30,7 +30,6 @@ $bootstrap-switch-handle-border-radius: .1rem;
     display: inline-block;
     top: 0;
     transform: translate3d(0, 0, 0);
-
   }
 
   &:focus-within {
@@ -46,7 +45,7 @@ $bootstrap-switch-handle-border-radius: .1rem;
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.2rem;
-    padding: .25rem .5rem;
+    padding: 0.25rem 0.5rem;
     vertical-align: middle;
   }
 
@@ -85,8 +84,8 @@ $bootstrap-switch-handle-border-radius: .1rem;
     border-top-right-radius: $bootstrap-switch-handle-border-radius;
   }
 
-  input[type='radio'],
-  input[type='checkbox'] {
+  input[type="radio"],
+  input[type="checkbox"] {
     filter: alpha(opacity=0);
     left: 0;
     margin: 0;
@@ -101,9 +100,9 @@ $bootstrap-switch-handle-border-radius: .1rem;
     .bootstrap-switch-handle-on,
     .bootstrap-switch-handle-off,
     .bootstrap-switch-label {
-      font-size: .875rem;
+      font-size: 0.875rem;
       line-height: 1.5;
-      padding: .1rem .3rem;
+      padding: 0.1rem 0.3rem;
     }
   }
 
@@ -111,9 +110,9 @@ $bootstrap-switch-handle-border-radius: .1rem;
     .bootstrap-switch-handle-on,
     .bootstrap-switch-handle-off,
     .bootstrap-switch-label {
-      font-size: .875rem;
+      font-size: 0.875rem;
       line-height: 1.5;
-      padding: .2rem .4rem;
+      padding: 0.2rem 0.4rem;
     }
   }
 
@@ -123,7 +122,7 @@ $bootstrap-switch-handle-border-radius: .1rem;
     .bootstrap-switch-label {
       font-size: 1.25rem;
       line-height: 1.3333333rem;
-      padding: .3rem .5rem;
+      padding: 0.3rem 0.5rem;
     }
   }
 
@@ -137,21 +136,23 @@ $bootstrap-switch-handle-border-radius: .1rem;
     .bootstrap-switch-label {
       cursor: default;
       filter: alpha(opacity=50);
-      opacity: .5;
+      opacity: 0.5;
     }
   }
 
   &.bootstrap-switch-animate .bootstrap-switch-container {
-    transition: margin-left .5s;
+    transition: margin-left 0.5s;
   }
 
   &.bootstrap-switch-inverse {
     .bootstrap-switch-handle-on {
-      border-radius: 0 $bootstrap-switch-handle-border-radius $bootstrap-switch-handle-border-radius 0;
+      border-radius: 0 $bootstrap-switch-handle-border-radius
+        $bootstrap-switch-handle-border-radius 0;
     }
 
     .bootstrap-switch-handle-off {
-      border-radius: $bootstrap-switch-handle-border-radius 0 0 $bootstrap-switch-handle-border-radius;
+      border-radius: $bootstrap-switch-handle-border-radius 0 0
+        $bootstrap-switch-handle-border-radius;
     }
   }
 
@@ -174,7 +175,7 @@ $bootstrap-switch-handle-border-radius: .1rem;
   }
 }
 
-@include dark-mode () {
+@include dark-mode() {
   .bootstrap-switch {
     border-color: $gray-600;
 

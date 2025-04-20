@@ -33,7 +33,7 @@
 
   & .select2-results__option {
     padding: 6px 12px;
-    user-select: none;
+    stok-select: none;
   }
 
   & .select2-selection--single .select2-selection__rendered {
@@ -80,11 +80,11 @@
   }
 
   .select2-results__option {
-    &[aria-disabled='true'] {
+    &[aria-disabled="true"] {
       color: $gray-600;
     }
 
-    &[aria-selected='true'] {
+    &[aria-selected="true"] {
       $color: $gray-300;
 
       background-color: $color;
@@ -135,7 +135,6 @@
           }
         }
 
-
         .select2-search.select2-search--inline {
           .select2-search__field {
             border: 0;
@@ -149,7 +148,7 @@
         border-color: darken($primary, 5%);
         color: color-yiq($primary);
         padding: 0 10px;
-        margin-top: .31rem;
+        margin-top: 0.31rem;
       }
 
       .select2-selection__choice__remove {
@@ -172,7 +171,7 @@
         }
 
         .select2-selection__choice {
-          margin-top: .4rem;
+          margin-top: 0.4rem;
         }
       }
     }
@@ -229,11 +228,11 @@ select.form-control-sm ~ {
       height: $input-height-sm;
 
       .select2-selection__rendered {
-        margin-top: -.4rem;
+        margin-top: -0.4rem;
       }
 
       .select2-selection__arrow {
-        top: -.12rem;
+        top: -0.12rem;
       }
     }
 
@@ -242,7 +241,7 @@ select.form-control-sm ~ {
 
       .select2-selection__rendered {
         padding: 0 $input-padding-x-sm * 0.5 $input-padding-y-sm;
-        margin-top: -($input-padding-x-sm * .2);
+        margin-top: -($input-padding-x-sm * 0.2);
 
         li:first-child.select2-search.select2-search--inline {
           margin-left: $input-padding-x-sm * 0.5;
@@ -273,7 +272,7 @@ select.form-control-sm ~ {
   @include select2-variant($name, $color);
 }
 
-@include dark-mode () {
+@include dark-mode() {
   .select2-selection {
     background-color: $dark;
     border-color: $gray-600;
@@ -311,7 +310,9 @@ select.form-control-sm ~ {
     color: $white;
   }
 
-  .select2-container--bootstrap4 .select2-selection--multiple .select2-selection__choice {
+  .select2-container--bootstrap4
+    .select2-selection--multiple
+    .select2-selection__choice {
     color: $white;
   }
 
