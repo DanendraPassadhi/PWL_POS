@@ -64,9 +64,9 @@
                 $('#myModal').modal('show');
             });
         }
-        var tableBarang;
+        var dataBarang;
         $(document).ready(function() {
-            tableBarang = $('#table-barang').DataTable({
+            dataBarang = $('#table-barang').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -143,11 +143,11 @@
             });
             $('#table-barang_filter input').unbind().bind().on('keyup', function(e) {
                 if (e.keyCode == 13) { // enter key
-                    tableBarang.search(this.value).draw();
+                    dataBarang.search(this.value).draw();
                 }
             });
             $('.filter_kategori').change(function() {
-                tableBarang.draw();
+                dataBarang.draw();
             });
         });
     </script>

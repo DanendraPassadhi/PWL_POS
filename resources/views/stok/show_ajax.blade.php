@@ -37,7 +37,7 @@
                 </tr>
                 <tr>
                     <th>Penginput</th>
-                    <td>{{ $stok->user->user_nama }}</td>
+                    <td>{{ $stok->user->nama }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal stok</th>

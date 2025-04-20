@@ -52,32 +52,24 @@
 $(document).ready(function() {
     $("#form-tambah").validate({
         rules: {
-            kategori_id: {
+            user_id: {
                 required: true,
                 number: true
             },
-            stok_kode: {
-                required: true,
-                minlength: 3,
-                maxlength: 10
-            },
-            stok_nama: {
-                required: true,
-                minlength: 3,
-                maxlength: 100
-            },
-            harga_beli: {
+            barang_id: {
                 required: true,
                 number: true
             },
-            harga_jual: {
+            stok_tanggal: {
                 required: true,
-                number: true
+                date: true
             },
-            supplier_id: {
+            jumlah_stok: {
                 required: true,
                 number: true
             }
+        }
+    });
         },
         submitHandler: function(form) {
             $.ajax({

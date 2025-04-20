@@ -53,7 +53,7 @@ class StokController extends Controller
     public function create_ajax()
     {
         $barang = BarangModel::select('barang_id', 'barang_nama')->get();
-        $user = UserModel::select('user_id', 'user_nama')->get();
+        $user = UserModel::select('user_id', 'nama')->get();
         return view('stok.create_ajax', [
             'barang' => $barang,
             'user' => $user
@@ -64,8 +64,8 @@ class StokController extends Controller
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'barang_id' => ['required', 'integer', 'exists:m_barang,id'],
-                'user_id' => ['required', 'integer', 'exists:m_user,id'],
+                'barang_id' => ['required', 'integer', 'exists:m_barang,barang_id'],
+                'user_id' => ['required', 'integer', 'exists:m_user,user_id'],
                 'stok_tanggal' => ['required', 'date'],
                 'stok_jumlah' => ['required', 'numeric'],
             ];
@@ -90,16 +90,21 @@ class StokController extends Controller
     {
         $stok = StokModel::find($id);
         $barang = BarangModel::select('barang_id', 'barang_nama')->get();
-        $user = UserModel::select('user_id', 'user_nama')->get();
-        return view('barang.edit_ajax', ['stok' => $stok, 'barang' => $barang, 'user' => $user]);
+        $user = UserModel::select('user_id', 'nama')->get();
+
+        if ($stok) {
+            $stok->stok_tanggal = date('Y-m-d', strtotime($stok->stok_tanggal));
+        }
+
+        return view('stok.edit_ajax', ['stok' => $stok, 'barang' => $barang, 'user' => $user]);
     }
 
     public function update_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'barang_id' => ['required', 'integer', 'exists:m_barang,id'],
-                'user_id' => ['required', 'integer', 'exists:m_user,id'],
+                'barang_id' => ['required', 'integer', 'exists:m_barang,barang_id'],
+                'user_id' => ['required', 'integer', 'exists:m_user,user_id'],
                 'stok_tanggal' => ['required', 'date'],
                 'stok_jumlah' => ['required', 'numeric'],
             ];

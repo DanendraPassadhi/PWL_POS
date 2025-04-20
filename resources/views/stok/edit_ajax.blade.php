@@ -33,7 +33,7 @@
                     <label>Nama Barang</label>
                     <select name="barang_id" id="barang_id" class="form-control" required>
                         <option value="">- Pilih Barang -</option>
-                        @foreach($kategori as $l)
+                        @foreach($barang as $l)
                         <option {{ ($l->barang_id == $stok->barang_id)? 'selected' : '' }} value="{{ $l->barang_id }}">{{ $l->barang_nama }}</option>
                         @endforeach
                     </select>
@@ -51,12 +51,12 @@
                 </div>
                 <div class="form-group">
                     <label>Tanggal Stok</label>
-                    <input value="{{ $stok->stok_tanggal }}" type="text" name="stok_tanggal" id="stok_tanggal" class="form-control" required>
+                    <input value="{{ $stok->stok_tanggal }}" type="date" name="stok_tanggal" id="stok_tanggal" class="form-control" required>
                     <small id="error-stok_tanggal" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Jumlah Stok</label>
-                    <input value="{{ $stok->stok_jumlah }}" type="text" name="stok_jumlah" id="stok_jumlah" class="form-control" required>
+                    <input value="{{ $stok->stok_jumlah }}" type="number" name="stok_jumlah" id="stok_jumlah" class="form-control" required>
                     <small id="error-stok_jumlah" class="error-text form-text text-danger"></small>
                 </div>
             </div>
@@ -71,12 +71,10 @@
 $(document).ready(function() {
     $("#form-edit").validate({
         rules: {
-            kategori_id: {required: true},
-            stok_kode: {required: true, minlength: 3},
-            stok_nama: {required: true, maxlength: 100},
-            harga_beli: {required: true, number: true},
-            harga_jual: {required: true, number: true},
-            supplier_id: {required: true}
+            barang_id: {required: true},
+            user_id: {required: true},
+            stok_tanggal: {required: true, date: true},
+            stok_jumlah: {required: true, number: true}
         },
         submitHandler: function(form) {
             $.ajax({
