@@ -95,9 +95,9 @@
             <thead>
                 <tr>
                     <th class="text-center">No</th>
+                    <th>Tanggal Stok</th>
                     <th>Nama Barang</th>
                     <th>Nama Penginput</th>
-                    <th>Tanggal Stok</th>
                     <th>Jumlah Stok</th>
                 </tr>
             </thead>
@@ -105,9 +105,9 @@
                 @foreach ($stok as $b)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
+                        <td>{{ \Carbon\Carbon::parse($b->stok_tanggal)->format('d-m-Y') }}</td>
                         <td>{{ $b->barang->barang_nama }}</td>
                         <td>{{ $b->user->nama }}</td>
-                        <td>{{ \Carbon\Carbon::parse($b->stok_tanggal)->format('d-m-Y') }}</td>
                         <td>{{ $b->stok_jumlah }}</td>
                     </tr>
                 @endforeach

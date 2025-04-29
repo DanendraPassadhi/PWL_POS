@@ -108,7 +108,7 @@
         @endphp
 
         <div class="transaction-info">
-            <strong>No: {{ $loop->iteration }}</strong> |
+            <strong>Kode: {{ $p->penjualan_kode }}</strong> |
             Tanggal: {{ \Carbon\Carbon::parse($p->penjualan_tanggal)->format('d-m-Y') }} |
             Kasir: {{ $p->user->nama }} |
             Pembeli: {{ $p->pembeli }}
@@ -137,7 +137,7 @@
                     </tr>
                 @endforeach
                 <tr>
-                    <td colspan="3" class="text-right"><strong>Total Transaksi</strong></td>
+                    <td colspan="3" class="text-left"><strong>Total Transaksi</strong></td>
                     <td class="text-right"><strong>Rp {{ number_format($totalTransaksi, 0, ',', '.') }}</strong></td>
                 </tr>
             </tbody>

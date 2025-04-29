@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\StokModel;
 use App\Models\BarangModel;
 use App\Models\UserModel;
+use App\Models\SupplierModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -23,17 +24,26 @@ class StokController extends Controller
         ];
         $barang = BarangModel::select('barang_id', 'barang_nama')->get();
         $user = UserModel::select('user_id', 'nama')->get();
+        $supplier = SupplierModel::select('id', 'supplier_nama')->get();
         return view('stok.index', [
             'activeMenu' => $activeMenu,
             'breadcrumb' => $breadcrumb,
             'barang'    => $barang,
-            'user'      => $user
+            'user'      => $user,
+            'supplier'  => $supplier
         ]);
     }
 
     public function list(Request $request)
     {
-        $stok = StokModel::select('stok_id', 'barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah')->with('barang', 'user');
+        $stok = StokModel::select('stok_id', 'barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah')
+            ->with(['barang.supplier', 'user']);
+        
+        $user_id = $request->input('filter_user');
+        if (!empty($user_id)) {
+            $stok->where('user_id', $user_id);
+        }
+
         $barang_id = $request->input('filter_barang');
         if (!empty($barang_id)) {
             $stok->where('barang_id', $barang_id);
@@ -286,7 +296,7 @@ class StokController extends Controller
     public function export_pdf()
     {
         $stok = StokModel::select('barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah')
-            ->orderBy('barang_id')
+            ->orderBy('stok_tanggal')
             ->with(['barang', 'user'])
             ->get();
 

@@ -43,12 +43,16 @@
                             <td class="col-9">{{ $stok->user->nama }}</td>
                         </tr>
                         <tr>
+                            <th class="text-right col-3">Supplier :</th>
+                            <td class="col-9">{{ $stok->barang->supplier->supplier_nama }}</td>
+                        </tr>
+                        <tr>
                             <th class="text-right col-3">Tanggal Stok :</th>
-                            <td class="col-9">{{ $stok->Tanggal_stok }}</td>
+                            <td class="col-9">{{ $stok->stok_tanggal }}</td>
                         </tr>
                         <tr>
                             <th class="text-right col-3">Jumlah Stok :</th>
-                            <td class="col-9">{{ $stok->stok_nama }}</td>
+                            <td class="col-9">{{ $stok->stok_jumlah }}</td>
                         </tr>
                     </table>
                 </div>

@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Models\BarangModel;
+use App\Models\StokModel;
 
 class PenjualanController extends Controller
 {
@@ -69,10 +70,12 @@ class PenjualanController extends Controller
     {
         $user = UserModel::select('user_id', 'nama')->get();
         $barang = BarangModel::select('barang_id', 'barang_nama', 'harga_jual')->get();
+        $stok = StokModel::select('barang_id', 'stok_jumlah')->get();
 
         return view('penjualan.create_ajax', [
             'user' => $user,
-            'detail' => $barang
+            'detail' => $barang,
+            'stok' => $stok
         ]);
     }
 

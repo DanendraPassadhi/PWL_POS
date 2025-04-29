@@ -40,6 +40,10 @@
                     <td>{{ $stok->user->nama }}</td>
                 </tr>
                 <tr>
+                    <th>Supplier</th>
+                    <td>{{ $stok->barang->supplier->supplier_nama }}</td>
+                </tr>
+                <tr>
                     <th>Tanggal stok</th>
                     <td>{{ $stok->stok_tanggal }}</td>
                 </tr>

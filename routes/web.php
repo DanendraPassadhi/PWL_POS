@@ -258,7 +258,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
 
     // route Stok
-    Route::middleware(['authorize:ADM,MNG'])->group(function () {
+    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
         Route::get('/stok', [StokController::class, 'index']);
         Route::post('/stok/list', [StokController::class, 'list']);
         Route::get('/stok/create_ajax', [StokController::class, 'create_ajax']); // ajax form create
@@ -275,7 +275,7 @@ Route::middleware(['auth'])->group(function () { // artinya semua route di dalam
     });
 
     // route penjualan
-    Route::middleware(['authorize:ADM,MNG'])->group(function () {
+    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
         Route::get('/penjualan', [PenjualanController::class, 'index']);
         Route::post('/penjualan/list', [PenjualanController::class, 'list']);
         Route::get('/penjualan/create_ajax', [PenjualanController::class, 'create_ajax']); // ajax form create

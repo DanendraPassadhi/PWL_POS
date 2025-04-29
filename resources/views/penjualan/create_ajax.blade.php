@@ -18,19 +18,25 @@
                 <div class="form-group">
                     <label>Barang dan Jumlah</label>
                     <div id="barang-container">
-                        <div class="input-group mb-2">
-                            <select name="barang_id[]" class="form-control barang-select" required>
-                                <option value="">- Pilih Barang -</option>
-                                @foreach ($detail as $s)
-                                    <option value="{{ $s->barang_id }}" data-harga="{{ $s->harga_jual }}">
-                                        {{ $s->barang_nama }} - Rp {{ number_format($s->harga_jual, 0, ',', '.') }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <input type="number" name="jumlah[]" class="form-control ml-2" placeholder="Jumlah"
-                                required min="1">
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-success" onclick="addBarangField()">+</button>
+                        <div class="barang-item mb-3">
+                            <div class="input-group">
+                                <select name="barang_id[]" class="form-control barang-select" required>
+                                    <option value="">- Pilih Barang -</option>
+                                    @foreach ($detail as $s)
+                                        <option value="{{ $s->barang_id }}" data-harga="{{ $s->harga_jual }}"
+                                            data-stok="{{ $stok->where('barang_id', $s->barang_id)->first()->stok_jumlah ?? 0 }}">
+                                            {{ $s->barang_nama }} - Rp {{ number_format($s->harga_jual, 0, ',', '.') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <input type="number" name="jumlah[]" class="form-control ml-2 jumlah-input"
+                                    placeholder="Jumlah" required min="1" max="0">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-success" onclick="addBarangField()">+</button>
+                                </div>
+                            </div>
+                            <div class="stok-info" style="display: none; margin-top: 5px;">
+                                <span class="badge badge-info">Stok tersedia: <span class="stok-jumlah">0</span></span>
                             </div>
                         </div>
                     </div>
@@ -41,25 +47,73 @@
                     function addBarangField() {
                         var barangContainer = document.getElementById('barang-container');
                         var newField = document.createElement('div');
-                        newField.className = 'input-group mb-2';
+                        newField.className = 'barang-item mb-3';
                         newField.innerHTML = `
-                            <select name="barang_id[]" class="form-control barang-select" required>
-                                <option value="">- Pilih Barang -</option>
-                                @foreach ($detail as $s)
-                                <option value="{{ $s->barang_id }}" data-harga="{{ $s->harga_jual }}">{{ $s->barang_nama }} - Rp {{ number_format($s->harga_jual, 0, ',', '.') }}</option>
-                                @endforeach
-                            </select>
-                            <input type="number" name="jumlah[]" class="form-control ml-2" placeholder="Jumlah" required min="1">
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-danger" onclick="removeBarangField(this)">-</button>
+                            <div class="input-group">
+                                <select name="barang_id[]" class="form-control barang-select" required>
+                                    <option value="">- Pilih Barang -</option>
+                                    @foreach ($detail as $s)
+                                    <option value="{{ $s->barang_id }}" data-harga="{{ $s->harga_jual }}" data-stok="{{ $stok->where('barang_id', $s->barang_id)->first()->stok_jumlah ?? 0 }}">{{ $s->barang_nama }} - Rp {{ number_format($s->harga_jual, 0, ',', '.') }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="number" name="jumlah[]" class="form-control ml-2 jumlah-input" placeholder="Jumlah" required min="1" max="0">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-danger" onclick="removeBarangField(this)">-</button>
+                                </div>
+                            </div>
+                            <div class="stok-info" style="display: none; margin-top: 5px;">
+                                <span class="badge badge-info">Stok tersedia: <span class="stok-jumlah">0</span></span>
                             </div>
                         `;
                         barangContainer.appendChild(newField);
+                        initializeBarangSelect(newField.querySelector('.barang-select'));
                     }
 
                     function removeBarangField(button) {
-                        button.parentElement.parentElement.remove();
+                        var container = button.closest('.barang-item');
+                        container.remove();
                     }
+
+                    function initializeBarangSelect(select) {
+                        $(select).on('change', function() {
+                            var selectedOption = $(this).find('option:selected');
+                            var stokInfo = $(this).closest('.barang-item').find('.stok-info');
+                            var jumlahInput = $(this).closest('.barang-item').find('.jumlah-input');
+                            var stokJumlah = selectedOption.data('stok');
+
+                            if (selectedOption.val()) {
+                                stokInfo.show();
+                                stokInfo.find('.stok-jumlah').text(stokJumlah);
+                                jumlahInput.attr('max', stokJumlah);
+                                jumlahInput.val('1'); // Reset jumlah ke 1 saat ganti barang
+                            } else {
+                                stokInfo.hide();
+                                jumlahInput.attr('max', '0');
+                            }
+                        });
+                    }
+
+                    // Initialize existing barang selects
+                    $(document).ready(function() {
+                        $('.barang-select').each(function() {
+                            initializeBarangSelect(this);
+                        });
+
+                        // Validasi jumlah input
+                        $(document).on('input', '.jumlah-input', function() {
+                            var max = parseInt($(this).attr('max'));
+                            var value = parseInt($(this).val());
+
+                            if (value > max) {
+                                $(this).val(max);
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Peringatan',
+                                    text: 'Jumlah tidak boleh melebihi stok tersedia'
+                                });
+                            }
+                        });
+                    });
                 </script>
                 <div class="form-group">
                     <label>Tanggal Penjualan</label>

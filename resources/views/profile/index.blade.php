@@ -18,7 +18,7 @@
                     <label for="profile_picture">Foto Profil</label>
                     <div class="mb-3">
                         <img id="profile_preview"
-                            src="{{ Storage::disk('public')->exists('profile/' . Auth::user()->profile_picture) ? asset('storage/profile/' . Auth::user()->profile_picture) : asset('profile.png') }}"
+                            src="{{ Auth::user()->profile_picture && Storage::disk('public')->exists('profile/' . Auth::user()->profile_picture) ? asset('storage/profile/' . Auth::user()->profile_picture) : asset('profile.png') }}"
                             class="img-thumbnail" alt="User Image" style="width: 150px; height: 150px; object-fit: cover">
                     </div>
 

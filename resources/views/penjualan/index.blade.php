@@ -75,7 +75,7 @@
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.filter_kategori = $('.filter_kategori').val();
+                        d.filter_user = $('.filter_user').val();
                     }
                 },
                 columns: [{
@@ -134,7 +134,7 @@
                     tablePenjualan.search(this.value).draw();
                 }
             });
-            $('.filter_kategori').change(function() {
+            $('.filter_user').change(function() {
                 tablePenjualan.draw();
             });
         });

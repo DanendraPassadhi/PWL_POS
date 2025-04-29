@@ -2,11 +2,13 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Daftar stok</h3>
+            <h3 class="card-title">Daftar Stok</h3>
             <div class="card-tools">
                 <button onclick="modalAction('{{ url('/stok/import') }}')" class="btn btn-info">Import Stok</button>
-                <a href="{{ url('/stok/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Stok</a>
-                <a href="{{ url('/stok/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Stok</a>
+                <a href="{{ url('/stok/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export
+                    Stok</a>
+                <a href="{{ url('/stok/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export
+                    Stok</a>
                 <button onclick="modalAction('{{ url('/stok/create_ajax') }}')" class="btn btn-success">Tambah Data
                     (Ajax)</button>
             </div>
@@ -18,6 +20,15 @@
                     <div class="col-md-12">
                         <div class="form-group form-group-sm row text-sm mb-0">
                             <label for="filter_date" class="col-md-1 col-form-label">Filter</label>
+                            <div class="col-md-3">
+                                <select name="filter_barang" class="form-control form-control-sm filter_barang">
+                                    <option value="">- Semua -</option>
+                                    @foreach ($barang as $l)
+                                        <option value="{{ $l->barang_id }}">{{ $l->barang_nama }}</option>
+                                    @endforeach
+                                </select>
+                                <small class="form-text text-muted">Barang</small>
+                            </div>
                             <div class="col-md-3">
                                 <select name="filter_user" class="form-control form-control-sm filter_user">
                                     <option value="">- Semua -</option>
@@ -45,6 +56,7 @@
                         <th>Nama Penginput</th>
                         <th>Tanggal Stok</th>
                         <th>Jumlah Stok</th>
+                        <th>Supplier</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -72,7 +84,8 @@
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.filter_kategori = $('.filter_kategori').val();
+                        d.filter_user = $('.filter_user').val();
+                        d.filter_barang = $('.filter_barang').val();
                     }
                 },
                 columns: [{
@@ -85,14 +98,14 @@
                     {
                         data: "barang.barang_nama",
                         className: "",
-                        width: "25%",
+                        width: "20%",
                         orderable: true,
                         searchable: true
                     },
                     {
                         data: "user.nama",
                         className: "",
-                        width: "25%",
+                        width: "20%",
                         orderable: true,
                         searchable: true
                     },
@@ -111,6 +124,13 @@
                         searchable: false
                     },
                     {
+                        data: "barang.supplier.supplier_nama",
+                        className: "",
+                        width: "15%",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
                         data: "aksi",
                         className: "text-center",
                         width: "15%",
@@ -119,12 +139,15 @@
                     }
                 ]
             });
-            $('#table_stok_filter input').unbind().bind().on('keyup', function(e) {
+            $('#table-stok_filter input').unbind().bind().on('keyup', function(e) {
                 if (e.keyCode == 13) { // enter key
                     tableStok.search(this.value).draw();
                 }
             });
-            $('.filter_kategori').change(function() {
+            $('.filter_user').change(function() {
+                tableStok.draw();
+            });
+            $('.filter_barang').change(function() {
                 tableStok.draw();
             });
         });
