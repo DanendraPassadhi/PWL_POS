@@ -35,7 +35,16 @@ class PenjualanDetailController extends Controller
 
     public function show($id)
     {
-        $penjualanDetail = PenjualanDetailModel::with(['penjualan', 'barang'])->findOrFail($id);
+        $penjualanDetail = PenjualanDetailModel::with(['penjualan', 'barang'])
+            ->where('penjualan_id', $id)
+            ->get();
+
+        if ($penjualanDetail->isEmpty()) {
+            return response()->json([
+                'message' => 'Data detail penjualan tidak ditemukan'
+            ], 404);
+        }
+
         return response()->json($penjualanDetail);
     }
 
